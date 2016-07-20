@@ -220,7 +220,11 @@ def create(restbase, user, passwd, params):
 
     # Merge in any additional or overridden fields
     if params['fields']:
-        createfields.update(params['fields'])
+	# value is of type string, convert to a dict
+	s = params['fields']
+	json_acceptable_string = s.replace("'", "\"")
+	tmp = json.loads(json_acceptable_string)
+	createfields.update(tmp)
 
     data = {'fields': createfields}
 
